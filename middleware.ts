@@ -15,8 +15,8 @@ const publicOnlyUrl: Routes = {
 // 순서 req, res
 export async function middleware(req: NextRequest, res: NextResponse) {
   // console.log("res >>>>>>>>>>>>>>>>>>>>>>>>", res);
-  console.log("req >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", res);
-  console.log("req >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", req);
+  // console.log("req >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", res);
+  // console.log("req >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", req);
 
   const session = await getSession();
   const exists = publicOnlyUrl[req.nextUrl.pathname];
