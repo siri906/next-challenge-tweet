@@ -29,7 +29,7 @@ export const login = async (currentState: any, formData: FormData) => {
   };
 
   const result = await formSchema.safeParseAsync(data);
-  console.log("result >>>>>>>>>>>>>>>>>>>>>.", result);
+  // console.log("result >>>>>>>>>>>>>>>>>>>>>.", result);
   if (!result.success) {
     return result.error.flatten();
   } else {
