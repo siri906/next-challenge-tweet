@@ -6,9 +6,8 @@ interface Routes {
 }
 
 const publicOnlyUrl: Routes = {
-  "/": true,
+  //일반 접근 가능
   "/login": true,
-  "/sms": true,
   "/create-account": true,
 };
 
@@ -22,12 +21,14 @@ export async function middleware(req: NextRequest, res: NextResponse) {
   const exists = publicOnlyUrl[req.nextUrl.pathname];
 
   if (!session.id) {
+    // 세션 id가 없고
     if (!exists) {
-      return NextResponse.redirect(new URL("/", req.url));
+      return NextResponse.redirect(new URL("/login", req.url));
     }
   } else {
+    // 세션 id가 있고
     if (exists) {
-      return NextResponse.redirect(new URL("/profile", req.url));
+      return NextResponse.redirect(new URL("/", req.url));
     }
   }
 }

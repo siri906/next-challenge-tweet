@@ -26,7 +26,8 @@ model User {
 }
 
 model Tweet {
-  id         Int      @id
+  id         Int      @id @default(autoincrement())
+  desc       String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   User       User?    @relation(fields: [userId], references: [id])
