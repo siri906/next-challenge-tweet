@@ -4,6 +4,7 @@ import { useFormState } from "react-dom";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
 import { login } from "./action";
+import Link from "next/link";
 
 export default function Login() {
   const [state, formAction] = useFormState(login, null);
@@ -20,6 +21,9 @@ export default function Login() {
           <Input name="password" type="password" placeholder="password" required errors={state?.fieldErrors.password} />
           <Button text="Login" />
         </form>
+        <div className="flex items-center justify-center my-5">
+          <Link href={"/create-account"}>회원가입</Link>
+        </div>
       </div>
     </div>
   );

@@ -18,10 +18,16 @@ async function getInitialTweets() {
   return tweets;
 }
 
-export type InitialTweets = Prisma.PromiseReturnType<typeof getInitialTweets>;
+export interface InitialTweets {
+  id: number;
+  desc: string;
+  created_at: Date;
+  userId: number;
+}
+// export type InitialTweets = Prisma.PromiseReturnType<typeof getInitialTweets>;
 export default async function Home() {
   const initialTweets = await getInitialTweets();
-  const initialTweetsUser = await getInitialTweets();
+
   return (
     <>
       <div>form</div>
