@@ -1,7 +1,7 @@
 "use client";
 
-import { HomeIcon as SolidHomeIcon, NewspaperIcon as SolidNewspaperIcon, ChatBubbleOvalLeftEllipsisIcon as SolidChatIcon, VideoCameraIcon as SolidVideoCameraIcon, UserIcon as SolidUserIcon, MagnifyingGlassIcon as SolidMagnifyingGlassIcon } from "@heroicons/react/24/solid";
-import { HomeIcon as OutlineHomeIcon, NewspaperIcon as OutlineNewspaperIcon, ChatBubbleOvalLeftEllipsisIcon as OutlineChatIcon, VideoCameraIcon as OutlineVideoCameraIcon, MagnifyingGlassIcon as OutlineMagnifyingGlassIcon, UserIcon as OutlineUserIcon } from "@heroicons/react/24/outline";
+import { HomeIcon as SolidHomeIcon, UserIcon as SolidUserIcon, MagnifyingGlassIcon as SolidMagnifyingGlassIcon } from "@heroicons/react/24/solid";
+import { HomeIcon as OutlineHomeIcon, MagnifyingGlassIcon as OutlineMagnifyingGlassIcon, UserIcon as OutlineUserIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
