@@ -1,5 +1,4 @@
 import db from "@/lib/db";
-import getSession from "@/lib/session";
 import { formatToTimeAgo } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";

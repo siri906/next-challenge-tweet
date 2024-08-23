@@ -1,7 +1,6 @@
 "use server";
 
 import db from "@/lib/db";
-import { error } from "console";
 import { z } from "zod";
 
 const searchTweet = async (search: string) => {
@@ -31,21 +30,24 @@ const formSchema = z.object({
 });
 
 export async function searchFn(prev: any, formData: FormData) {
-  console.log("prev", prev);
   const data = {
     search: formData.get("search"),
   };
 
   const result = await formSchema.safeParseAsync(data);
-
   if (!result.success) {
     return {
       tweets: [],
       error: result.error.flatten().fieldErrors.search,
     };
   }
-
   const tweets = await searchTweet(result.data.search);
-
-  return { error: [], tweets };
+  if (tweets.length === 0) {
+    return {
+      tweets: [],
+      error: ["검색결과가 없습니다."],
+    };
+  } else {
+    return { tweets, error: [] };
+  }
 }

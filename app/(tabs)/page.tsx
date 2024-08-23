@@ -1,7 +1,5 @@
 import TweetList from "@/components/Tweet-list";
 import db from "@/lib/db";
-import { Prisma } from "@prisma/client";
-import Link from "next/link";
 
 async function getInitialTweets() {
   const tweets = db.tweet.findMany({
