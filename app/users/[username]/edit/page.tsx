@@ -1,13 +1,6 @@
-import Button from "@/components/Button";
-import Input from "@/components/Input";
-
 import db from "@/lib/db";
 
-import Image from "next/image";
-
-import { notFound, redirect } from "next/navigation";
-import { useFormState } from "react-dom";
-import { editUserInfo } from "./action";
+import { notFound } from "next/navigation";
 import EditForm from "@/components/Edit-form";
 
 async function getUser(username: string) {

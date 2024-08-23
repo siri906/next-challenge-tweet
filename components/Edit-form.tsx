@@ -5,7 +5,7 @@ import Button from "./Button";
 import Input from "./Input";
 import { useFormState } from "react-dom";
 import Image from "next/image";
-import { useReducer } from "react";
+import { useReducer, useState } from "react";
 import { notFound } from "next/navigation";
 
 const userInfoReducer = (state: any, action: any) => {
@@ -23,7 +23,10 @@ const userInfoReducer = (state: any, action: any) => {
       };
 
     case "bio":
-      return;
+      return {
+        ...state,
+        bio: action.event.target.value,
+      };
     case "password":
       return {
         ...state,
@@ -54,24 +57,47 @@ export default function EditForm({ user }: Props) {
     password: "",
     confirmPassword: "",
   };
+  const [preview, setPreview] = useState(user.bio);
   const [state, action] = useFormState(editUserInfo, null);
   const [result, handleFn] = useReducer(userInfoReducer, initialState);
+  const onImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    // console.log("event", event);
+    const {
+      target: { files },
+    } = event;
+    if (!files) {
+      return;
+    }
+    const file = files[0];
+    // url 을 생성하는 거고 브라우저에만 들어가고 파일이 업로드된 메모리를 참조 / 새로고침하면 메모리 만료
+    const url = URL.createObjectURL(file);
+    // console.log("url", url);
+    setPreview(url);
+  };
 
   return (
     <div className="h-screen flex justify-center items-center gap-10">
-      <form action={action} className="flex flex-col gap-5">
-        <div className="flex flex-col items-center">
-          <h1 className="text-3xl">Change {user.username} Infomation</h1>
-          <div className="text-center my-10">
-            <div className="size-40 overflow-hidden rounded-full">{user.bio !== null ? <Image src={user.bio} width={300} height={300} alt={user.username} /> : null}</div>
-          </div>
+      <div className="flex flex-col items-center">
+        <h1 className="text-3xl">Change {user.username} Infomation</h1>
+        <div>
+          <label htmlFor="bio" style={{ backgroundImage: `url(${preview})` }} className="bg-center bg-cover border-2 aspect-square flex items-center justify-center flex-col text-neutral-300 border-neutral-300 rounded-md border-dashed cursor-pointer size-40 my-10">
+            <>
+              <div className="text-white text-sm bg-slate-800 p-2 rounded-lg">클릭시 사진 변경</div>
+              {state?.fieldErrors.bio}
+            </>
+          </label>
         </div>
-        <Input name="username" type="text" placeholder="Username" value={result.username} errors={state?.fieldErrors.username} onChange={(event) => handleFn({ type: "username", event })} />
-        <Input name="email" type="email" placeholder="Email" value={result.email} errors={state?.fieldErrors.email} onChange={(event) => handleFn({ type: "email", event })} />
-        <Input name="password" type="password" placeholder="password" value={result.password} errors={state?.fieldErrors.password} onChange={(event) => handleFn({ type: "password", event })} />
-        <Input name="confirmPassword" type="password" placeholder="confirm password" value={result.confirmPassword} errors={state?.fieldErrors.confirmPassword} onChange={(event) => handleFn({ type: "confirmPassword", event })} />
-        <Button style={{ width: "100%" }} text="Edit User Info" />
-      </form>
+      </div>
+      <div>
+        <form action={action} className="flex flex-col gap-5">
+          <Input name="username" type="text" placeholder="Username" value={result.username} errors={state?.fieldErrors.username} onChange={(event) => handleFn({ type: "username", event })} />
+          <Input name="email" type="email" placeholder="Email" value={result.email} errors={state?.fieldErrors.email} onChange={(event) => handleFn({ type: "email", event })} />
+          <Input name="password" type="password" placeholder="password" value={result.password} errors={state?.fieldErrors.password} onChange={(event) => handleFn({ type: "password", event })} />
+          <Input name="confirmPassword" type="password" placeholder="confirm password" value={result.confirmPassword} errors={state?.fieldErrors.username} onChange={(event) => handleFn({ type: "confirmPassword", event })} />
+          <input onChange={onImageChange} type="file" id="bio" name="bio" accept="image/*" className="hidden" />
+          <Button style={{ width: "100%" }} text="Edit User Info" />
+        </form>
+      </div>
     </div>
   );
 }

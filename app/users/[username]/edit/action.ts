@@ -4,7 +4,7 @@ import db from "@/lib/db";
 import { z } from "zod";
 import getSession from "@/lib/session";
 import { redirect } from "next/navigation";
-import { error } from "console";
+import fs from "fs/promises";
 
 const editUserSchema = z
   .object({
@@ -12,6 +12,7 @@ const editUserSchema = z
     email: z.string(),
     password: z.string(),
     confirmPassword: z.string(),
+    bio: z.string(),
   })
   .superRefine(async ({ username }, ctx) => {
     const user = await db.user.findUnique({
@@ -62,6 +63,12 @@ export async function editUserInfo(prev: any, formData: FormData) {
     confirmPassword: formData.get("confirmPassword"),
   };
 
+  if (data.bio instanceof File) {
+    const bioData = await data.bio.arrayBuffer();
+    await fs.appendFile(`./public/${data.bio.name}`, Buffer.from(bioData));
+    data.bio = `/${data.bio.name}`;
+  }
+
   const result = await editUserSchema.safeParseAsync(data);
 
   if (!result.success) {
@@ -76,7 +83,7 @@ export async function editUserInfo(prev: any, formData: FormData) {
         id: checkId,
       },
       data: {
-        // bio: result.data.bio,
+        bio: result.data.bio,
         username: result.data.username,
         email: result.data.email,
         password: hashPassword,
