@@ -24,6 +24,11 @@ export default function Login() {
         <div className="flex items-center justify-center my-5">
           <Link href={"/create-account"}>회원가입</Link>
         </div>
+        <div>
+          <p>test info</p>
+          <p>test@mail.com</p>
+          <p>12341234</p>
+        </div>
       </div>
     </div>
   );
