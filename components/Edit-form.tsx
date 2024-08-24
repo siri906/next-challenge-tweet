@@ -61,7 +61,6 @@ export default function EditForm({ user }: Props) {
   const [state, action] = useFormState(editUserInfo, null);
   const [result, handleFn] = useReducer(userInfoReducer, initialState);
   const onImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // console.log("event", event);
     const {
       target: { files },
     } = event;
@@ -69,9 +68,7 @@ export default function EditForm({ user }: Props) {
       return;
     }
     const file = files[0];
-    // url 을 생성하는 거고 브라우저에만 들어가고 파일이 업로드된 메모리를 참조 / 새로고침하면 메모리 만료
     const url = URL.createObjectURL(file);
-    // console.log("url", url);
     setPreview(url);
   };
 

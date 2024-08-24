@@ -6,5 +6,5 @@ export default function TweetDetail({ params }: { params: { id: string } }) {
     return notFound();
   }
 
-  return <div></div>;
+  return <div>detail</div>;
 }

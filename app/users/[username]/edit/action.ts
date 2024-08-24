@@ -5,6 +5,7 @@ import { z } from "zod";
 import getSession from "@/lib/session";
 import { redirect } from "next/navigation";
 import fs from "fs/promises";
+import { revalidatePath } from "next/cache";
 
 const editUserSchema = z
   .object({
@@ -89,7 +90,7 @@ export async function editUserInfo(prev: any, formData: FormData) {
         password: hashPassword,
       },
     });
-
+    revalidatePath(`/users/${user.username}`);
     redirect(`/users/${user.username}`);
   }
 }
