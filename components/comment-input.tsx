@@ -27,7 +27,7 @@ export default function CommentInput({ id, sessionId, comments }: { id: number; 
   };
 
   const [_, action] = useFormState(interceptAction, null);
-  console.log("comments");
+
   return (
     <div>
       <form className="flex gap-3" action={action}>

@@ -4,7 +4,6 @@ import { editUserInfo } from "@/app/users/[username]/edit/action";
 import Button from "./Button";
 import Input from "./Input";
 import { useFormState } from "react-dom";
-import Image from "next/image";
 import { useReducer, useState } from "react";
 import { notFound } from "next/navigation";
 

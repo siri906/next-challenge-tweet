@@ -35,19 +35,17 @@ export async function searchFn(prev: any, formData: FormData) {
   };
 
   const result = await formSchema.safeParseAsync(data);
+
   if (!result.success) {
-    return {
-      tweets: [],
-      error: result.error.flatten().fieldErrors.search,
-    };
+    return { error: result.error.flatten().fieldErrors.search };
   }
-  const tweets = await searchTweet(result.data.search);
-  if (tweets.length === 0) {
-    return {
-      tweets: [],
-      error: ["검색결과가 없습니다."],
-    };
-  } else {
-    return { tweets, error: [] };
-  }
+  try {
+    const tweets = await searchTweet(result.data.search);
+    if (tweets.length === 0) {
+      return {
+        error: ["검색결과가 없습니다."],
+      };
+    }
+    return { tweets };
+  } catch (error) {}
 }
